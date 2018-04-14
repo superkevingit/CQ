@@ -9,8 +9,10 @@ class Info(BaseModel):
     title = CharField()
     details = CharField()
     price = CharField()
-    time = DataTimeField()
-    img_name = CharField()
+    time = DataTimeField(default=datetime.datetime.now)
+    img_name = CharField(null=True)
+    tag = CharField() #商品类型 如数码等
+    flag = BooleanField(default=0) #商品类型 出售1或收购0
 
     class Meta:
         db_table = 'info'
