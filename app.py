@@ -257,7 +257,7 @@ def listBuy():
     for buy in buys:
         data['data'][cnt] = {
             "id" : buy.id,
-            "name": buy.name,
+            "name": buy.user.name,
             "tag": buy.tag,
             "title": buy.title
         }
