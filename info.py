@@ -71,7 +71,12 @@ class Info(BaseModel):
 
     @classmethod
     def listBuyByUserid(cls, uid):
-        l = cls.select().join(User).where(User.uid == cls.user, cls.user == uid, cls.flag==0)
+        l = (cls
+             .select(cls, User)
+             .join(
+                User,
+                on=(cls.user == User.uid).alias('user'))
+             .where(cls.flag==0, cls.user==uid))
         return l
 
     @classmethod
