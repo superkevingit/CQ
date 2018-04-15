@@ -4,7 +4,7 @@ from peewee import *
 from msdatabase import *
 
 class User(BaseModel):
-    id = PrimaryKeyField()
+    uid = PrimaryKeyField()
     name = CharField()
     password = CharField()
     tel = CharField()
@@ -27,5 +27,5 @@ class User(BaseModel):
         u = cls.select().where(cls.name==info['name'])
         for n in u:
             if n.password==info['password']:
-                return True
+                return n
         return False
