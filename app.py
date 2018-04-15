@@ -25,21 +25,25 @@ def _db_close(exc):
 def addUser():
     name = request.form.get('name')
     password = request.form.get('password')
+    tel = request.form.get('tel')
     data = {
         "status": "",
         "data":{
             "uid":"",
             "name":"",
-            "password":""
+            "password":"",
+            "tel":""
         }
     }
     u = User.addUser({
         "name" : name,
-        "password": password
+        "password": password,
+        "tel": tel
     })
     data['data']['uid'] = u.uid
     data['data']['name'] = u.name
     data['data']['password'] = u.password
+    data['data']['tel'] = u.tel
     data['status'] = True
     return json.dumps(data)
 
@@ -65,7 +69,8 @@ def login():
         data['data']['name'] = u.name
         data['data']['password'] = u.password
         data['status'] = True
-    data['status'] = False
+    else:
+        data['status'] = False
     return json.dumps(data)
 
 # 9
