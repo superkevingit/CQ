@@ -46,37 +46,37 @@ class Info(BaseModel):
 
     @classmethod
     def listSold(cls):
-        l = cls.select(id, title, price, time)
+        l = cls.select().where(cls.flag==1)
         return l
 
     @classmethod
     def listSoldByTag(cls, tag):
-        l = cls.select(id, title, price, time).where(cls.tag == tag)
+        l = cls.select().where(cls.tag == tag, cls.flag==1)
         return l
 
     @classmethod
     def listSoldByUserid(cls, uid):
-        l = cls.select(id, title, price, time).where(cls.user == uid)
+        l = cls.select().where(cls.user == uid, cls.flag==1)
         return l
 
     @classmethod
     def listBuy(cls):
-        l = cls.select(id, title, tag, name).join(User).where(User.uid == cls.user)
+        l = cls.select().join(User).where(User.uid == cls.user, cls.flag==0)
         return l
 
     @classmethod
     def listBuyByUserid(cls, uid):
-        l = cls.select(id, title, tag, name).join(User).where(User.uid == cls.user, cls.user == uid)
+        l = cls.select().join(User).where(User.uid == cls.user, cls.user == uid, cls.flag==0)
         return l
 
     @classmethod
     def listSoldDetails(cls, id):
-        ds = cls.select(id, details, img_name, time, name, tel).join(User).where(cls.id==id ,User.uid == cls.user)
+        ds = cls.select().join(User).where(cls.id==id ,User.uid == cls.user)
         for d in ds:
             return d
     @classmethod
     def listBuyDetails(cls, id):
-        ds = cls.select(id, details, price, time, name, tel).join(User).where(cls.id==id ,User.uid == cls.user)
+        ds = cls.select().join(User).where(cls.id==id ,User.uid == cls.user)
         for d in ds:
             return d
 
