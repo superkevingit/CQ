@@ -1,13 +1,20 @@
 #!/usr/bin/env python
 # encoding: utf-8
-from flask import Flask, request
-from ms_database import mysql_db
-from user import User
-from info import Info
+from flask import Flask, request, send_from_directory
+from werkzeug import secure_filename
 import json
 import os
 
+from ms_database import mysql_db
+from user import User
+from info import Info
+
+BASEPATH = os.path.dirname(__file__)
+UPLOAD_PATH = os.path.join(BASEPATH, 'uploads')
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
+
 app = Flask(__name__)
+app.config['UPLOAD_PATH'] = UPLOAD_PATH
 
 # MySQL
 @app.before_request
@@ -81,9 +88,9 @@ def addSold():
     details = request.form.get('details')
     price = request.form.get('price')
     tag = request.form.get('tag')
-    img = request.files['file']
-    img_name = img.filename
-    file.save(os.path.join('uploads', img_name))
+    file = request.files['img_file']
+    img_name = secure_filename(file.filename)
+    file.save(os.path.join(app.config['UPLOAD_PATH'], img_name))
     data = {
         "status": "",
         "data": {
@@ -113,7 +120,7 @@ def addSold():
         data['data']['title'] = i.title
         data['data']['details'] = i.details
         data['data']['price'] = i.price
-        data['data']['time'] = i.time
+        data['data']['time'] = i.time.strftime('%Y-%m-%d %H:%M:%S')
         data['data']['img_name'] = i.img_name
         data['data']['tag'] = i.tag
         data['data']['flag'] = i.flag
@@ -340,3 +347,8 @@ def listBuyDetails():
         data['data']['price'] = d.price
         data['data']['time'] = d.time
     return json.dumps(data)
+
+@app.route('/uploads/<filename>')
+def uploaded_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'],
+                               filename)
