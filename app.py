@@ -268,6 +268,7 @@ def listBuy():
         data['status'] = True
     return json.dumps(data)
 
+# 10
 @app.route('/api/listBuyByUserid', methods=['POST'])
 def listBuyByUserid():
     uid = request.form.get('userid')
