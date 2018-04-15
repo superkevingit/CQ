@@ -81,12 +81,23 @@ class Info(BaseModel):
 
     @classmethod
     def listSoldDetails(cls, id):
-        ds = cls.select().join(User).where(cls.id==id ,User.uid == cls.user)
+        ds = (cls
+             .select(cls, User)
+             .join(
+                User,
+                on=(cls.user == User.uid).alias('user'))
+             .where(cls.id == id))
         for d in ds:
             return d
+
     @classmethod
     def listBuyDetails(cls, id):
-        ds = cls.select().join(User).where(cls.id==id ,User.uid == cls.user)
+        ds = (cls
+             .select(cls, User)
+             .join(
+                User,
+                on=(cls.user == User.uid).alias('user'))
+             .where(cls.id == id))
         for d in ds:
             return d
 

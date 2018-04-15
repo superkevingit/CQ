@@ -313,8 +313,8 @@ def listSoldDetails():
     else:
         data['status'] = True
         data['data']['id'] = d.id
-        data['data']['name'] = d.name
-        data['data']['tel'] = d.tel
+        data['data']['name'] = d.user.name
+        data['data']['tel'] = d.user.tel
         data['data']['details'] = d.details
         data['data']['img_name'] = d.img_name
         data['data']['time'] = d.time.strftime('%Y-%m-%d %H:%M:%S')
@@ -341,8 +341,8 @@ def listBuyDetails():
     else:
         data['status'] = True
         data['data']['id'] = d.id
-        data['data']['name'] = d.name
-        data['data']['tel'] = d.tel
+        data['data']['name'] = d.user.name
+        data['data']['tel'] = d.user.tel
         data['data']['details'] = d.details
         data['data']['price'] = d.price
         data['data']['time'] = d.time.strftime('%Y-%m-%d %H:%M:%S')
