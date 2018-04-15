@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 # encoding: utf-8
-from user import *
-from info import *
+from ms_database import mysql_db
+from user import User
+from info import Info
 
 mysql_db.connect()
 
 if( u'user' not in mysql_db.get_tables() ):
-    mysql_db.create_table(User)
+    User.create_table()
 
 if( u'info' not in mysql_db.get_tables() ):
-    mysql_db.create_table(Info)
+    Info.create_table()
 
 mysql_db.close()
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # encoding: utf-8
 from peewee import *
-from msdatabase import *
+from ms_database import *
 
 class User(BaseModel):
     uid = PrimaryKeyField()

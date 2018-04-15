@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # encoding: utf-8
 from flask import Flask, request
-from msdatabase import mysql_db
+from ms_database import mysql_db
 from user import User
 from info import Info
 import json
@@ -117,7 +117,7 @@ def addSold():
     return json.dumps(data)
 
 # 11
-@app.route('/api/addBuy', method=['POST'])
+@app.route('/api/addBuy', methods=['POST'])
 def addBuy():
     userid = request.form.get('userid')
     title = request.form.get('title')
@@ -159,7 +159,7 @@ def addBuy():
     return json.dumps(data)
 
 # 1
-@app.route('/api/listSold', method=['POST'])
+@app.route('/api/listSold', methods=['POST'])
 def listSold():
     data = {
         "status" : "",
@@ -183,7 +183,7 @@ def listSold():
     return json.dumps(data)
 
 # 3
-@app.route('/api/listSoldByTag', method=['POST'])
+@app.route('/api/listSoldByTag', methods=['POST'])
 def listSoldByTag():
     tag = request.form.get('tag')
     data = {
@@ -207,8 +207,12 @@ def listSoldByTag():
         data['status'] = True
     return json.dumps(data)
 
+@app.route('/api/listSoldByUserid', methods=['POST'])
+def listSoldByUserid():
+    uid = request.form.get('userid')
+
 # 4
-@app.route('/api/listBuy', method=['POST'])
+@app.route('/api/listBuy', methods=['POST'])
 def listBuy():
     data = {
         "status": "",
@@ -229,4 +233,60 @@ def listBuy():
         data['status'] = False
     else:
         data['status'] = True
+    return json.dumps(data)
+
+# 2
+@app.route('/api/listSoldDetails', methods=['POST'])
+def listSoldDetails():
+    id = request.form.get('id')
+    d = Info.listSoldDetails(id)
+    data = {
+        "status" : "",
+        "data":{
+            "id" : "",
+            "name" : "",
+            "tel" : "",
+            "details" : "",
+            "img_name" : "",
+            "time" : ""
+        }
+    }
+    if not d:
+        data['status'] = False
+    else:
+        data['status'] = True
+        data['data']['id'] = d.id
+        data['data']['name'] = d.name
+        data['data']['tel'] = d.tel
+        data['data']['details'] = d.details
+        data['data']['img_name'] = d.img_name
+        data['data']['time'] = d.time
+    return json.dumps(data)
+
+# 5
+@app.route('/api/listBuyDetails', methods=['POST'])
+def listBuyDetails():
+    id = request.form.get('id')
+    d = Info.listBuyDetails(id)
+    data = {
+        "status" : "",
+        "data":{
+            "id" : "",
+            "name" : "",
+            "tel" : "",
+            "details" : "",
+            "price" : "",
+            "time" : ""
+        }
+    }
+    if not d:
+        data['status'] = False
+    else:
+        data['status'] = True
+        data['data']['id'] = d.id
+        data['data']['name'] = d.name
+        data['data']['tel'] = d.tel
+        data['data']['details'] = d.details
+        data['data']['price'] = d.price
+        data['data']['time'] = d.time
     return json.dumps(data)

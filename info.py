@@ -57,3 +57,19 @@ class Info(BaseModel):
     def listBuy(cls):
         l = cls.select(id, title, tag, name).join(User).where(User.uid == cls.user)
         return l
+
+    @classmethod
+    def listSoldDetails(cls, id):
+        ds = cls.select(id, details, img_name, time, name, tel).join(User).where(cls.id==id ,User.uid == cls.user)
+        for d in ds:
+            return d
+    @classmethod
+    def listBuyDetails(cls, id):
+        ds = cls.select(id, details, price, time, name, tel).join(User).where(cls.id==id ,User.uid == cls.user)
+        for d in ds:
+            return d
+
+
+
+
+
