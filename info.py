@@ -54,8 +54,18 @@ class Info(BaseModel):
         return l
 
     @classmethod
+    def listSoldByUserid(cls, uid):
+        l = cls.select(id, title, price, time).where(cls.user == uid)
+        return l
+
+    @classmethod
     def listBuy(cls):
         l = cls.select(id, title, tag, name).join(User).where(User.uid == cls.user)
+        return l
+
+    @classmethod
+    def listBuyByUserid(cls, uid):
+        l = cls.select(id, title, tag, name).join(User).where(User.uid == cls.user, cls.user == uid)
         return l
 
     @classmethod

@@ -207,9 +207,30 @@ def listSoldByTag():
         data['status'] = True
     return json.dumps(data)
 
+# 8
 @app.route('/api/listSoldByUserid', methods=['POST'])
 def listSoldByUserid():
     uid = request.form.get('userid')
+    data = {
+        "status": "",
+        "data": {
+        }
+    }
+    solds = Info.listSoldByUserid(uid)
+    cnt = 0
+    for sold in solds:
+        data['data'][cnt] = {
+            "id" : sold.id,
+            "title": sold.title,
+            "price": sold.price,
+            "time": sold.time
+        }
+        cnt = cnt + 1
+    if cnt==0:
+        data['status'] = False
+    else:
+        data['status'] = True
+    return json.dumps(data)
 
 # 4
 @app.route('/api/listBuy', methods=['POST'])
@@ -220,6 +241,30 @@ def listBuy():
         }
     }
     buys = Info.listBuy()
+    cnt = 0
+    for buy in buys:
+        data['data'][cnt] = {
+            "id" : buy.id,
+            "name": buy.name,
+            "tag": buy.tag,
+            "title": buy.title
+        }
+        cnt = cnt + 1
+    if cnt==0:
+        data['status'] = False
+    else:
+        data['status'] = True
+    return json.dumps(data)
+
+@app.route('/api/listBuyByUserid', methods=['POST'])
+def listBuyByUserid():
+    uid = request.form.get('userid')
+    data = {
+        "status": "",
+        "data": {
+        }
+    }
+    buys = Info.listBuyByUserid(uid)
     cnt = 0
     for buy in buys:
         data['data'][cnt] = {
