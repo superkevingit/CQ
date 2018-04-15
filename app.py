@@ -163,7 +163,7 @@ def addBuy():
           data['data']['title'] = i.title
           data['data']['details'] = i.details
           data['data']['price'] = i.price
-          data['data']['time'] = i.time
+          data['data']['time'] = i.time.strftime('%Y-%m-%d %H:%M:%S')
           data['data']['tag'] = i.tag
           data['data']['flag'] = i.flag
     else:
@@ -185,7 +185,7 @@ def listSold():
             "id" : sold.id,
             "title": sold.title,
             "price": sold.price,
-            "time": sold.time
+            "time": sold.time.strftime('%Y-%m-%d %H:%M:%S')
         }
         cnt = cnt + 1
     if cnt==0:
@@ -210,7 +210,7 @@ def listSoldByTag():
             "id" : sold.id,
             "title": sold.title,
             "price": sold.price,
-            "time": sold.time
+            "time": sold.time.strftime('%Y-%m-%d %H:%M:%S')
         }
         cnt = cnt + 1
     if cnt==0:
@@ -235,7 +235,7 @@ def listSoldByUserid():
             "id" : sold.id,
             "title": sold.title,
             "price": sold.price,
-            "time": sold.time
+            "time": sold.time.strftime('%Y-%m-%d %H:%M:%S')
         }
         cnt = cnt + 1
     if cnt==0:
@@ -317,7 +317,7 @@ def listSoldDetails():
         data['data']['tel'] = d.tel
         data['data']['details'] = d.details
         data['data']['img_name'] = d.img_name
-        data['data']['time'] = d.time
+        data['data']['time'] = d.time.strftime('%Y-%m-%d %H:%M:%S')
     return json.dumps(data)
 
 # 5
@@ -345,7 +345,7 @@ def listBuyDetails():
         data['data']['tel'] = d.tel
         data['data']['details'] = d.details
         data['data']['price'] = d.price
-        data['data']['time'] = d.time
+        data['data']['time'] = d.time.strftime('%Y-%m-%d %H:%M:%S')
     return json.dumps(data)
 
 @app.route('/uploads/<filename>')
